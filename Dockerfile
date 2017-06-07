@@ -8,8 +8,8 @@ MAINTAINER cwei
 USER root
 
 RUN useradd -ms /bin/bash cwei
-
-
+RUN usermod -aG root cwei
+RUN echo "cwei   ALL = NOPASSWD: ALL" >> /etc/sudoers
 # install dev tools
 RUN yum clean all; \
     rpm --rebuilddb; \
@@ -75,6 +75,7 @@ RUN mv /tmp/native /usr/local/hadoop/lib
 ADD ssh_config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config
 RUN chown root:root /root/.ssh/config
+
 
 # # installing supervisord
 # RUN yum install -y python-setuptools
