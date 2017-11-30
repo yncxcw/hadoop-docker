@@ -15,7 +15,7 @@ RUN yum clean all; \
     rpm --rebuilddb; \
     yum install -y curl which tar sudo openssh-server openssh-clients rsync
 # update libselinux. see https://github.com/sequenceiq/hadoop-docker/issues/14
-RUN yum update -y libselinux
+#RUN yum update -y libselinux
 
 # passwordless ssh
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
@@ -38,8 +38,12 @@ RUN mkdir -p /tmp/native
 RUN curl -L https://github.com/sequenceiq/docker-hadoop-build/releases/download/v2.7.1/hadoop-native-64-2.7.1.tgz | tar -xz -C /tmp/native
 
 # hadoop
-RUN curl -s http://www.eu.apache.org/dist/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2.tar.gz | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s ./hadoop-3.0.0-alpha2 hadoop
+#RUN curl -s http://www.eu.apache.org/dist/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2.tar.gz | tar -xz -C /usr/local/
+RUN curl -s http://apache.mirrors.tds.net/hadoop/common/hadoop-3.0.0-beta1/hadoop-3.0.0-beta1.tar.gz | tar -xz -C /usr/local/
+
+
+
+RUN cd /usr/local && ln -s ./hadoop-3.0.0-beta1 hadoop
 
 ENV HADOOP_PREFIX /usr/local/hadoop
 ENV HADOOP_COMMON_HOME /usr/local/hadoop
